@@ -2,70 +2,94 @@ package br.com.rbeninca.mergulhandonospontinhos;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.AudioManager;
+import android.media.ToneGenerator;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
-    ArrayList<Letra> alfabetoBraile;
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    AlfabetoBraile alfabetoBraile;
+    EditText editTextResposta;
+    TextView tvPergunta;
+
+    Letra letra;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        editTextResposta=findViewById(R.id.editTextResposta);
+        tvPergunta=findViewById(R.id.textViewPergunta);
+        Button button = findViewById(R.id.button);
+        button.setOnClickListener(this);
+        alfabetoBraile=new AlfabetoBraile();
+        sorteiaLetra();
+    }
 
-        //Carrega letras Braile
-        alfabetoBraile = new ArrayList<Letra>();
-        alfabetoBraile.add(new Letra("a", new int[]{1}));
-        alfabetoBraile.add(new Letra("b", new int[]{1,2}));
-        alfabetoBraile.add(new Letra("c", new int[]{1,4}));
-        alfabetoBraile.add(new Letra("d", new int[]{1,4,5}));
-        alfabetoBraile.add(new Letra("e", new int[]{1,5}));
-        alfabetoBraile.add(new Letra("f", new int[]{1,2,4}));
-        alfabetoBraile.add(new Letra("g", new int[]{1,2,4,5}));
-        alfabetoBraile.add(new Letra("h", new int[]{1,2,5}));
-        alfabetoBraile.add(new Letra("i", new int[]{2,4}));
-        alfabetoBraile.add(new Letra("j", new int[]{2,4,5}));
-        alfabetoBraile.add(new Letra("k", new int[]{1,3}));
-        alfabetoBraile.add(new Letra("l", new int[]{1,2,3}));
-        alfabetoBraile.add(new Letra("m", new int[]{1,3,4}));
-        alfabetoBraile.add(new Letra("n", new int[]{1,3,4,5}));
-        alfabetoBraile.add(new Letra("o", new int[]{1,3,5}));
-        alfabetoBraile.add(new Letra("p", new int[]{1,2,3,4}));
-        alfabetoBraile.add(new Letra("q", new int[]{1,2,3,4,5}));
-        alfabetoBraile.add(new Letra("r", new int[]{1,2,3,5}));
-        alfabetoBraile.add(new Letra("s", new int[]{2,3,4}));
-        alfabetoBraile.add(new Letra("t", new int[]{2,3,4,5}));
-        alfabetoBraile.add(new Letra("u", new int[]{1,3,6}));
-        alfabetoBraile.add(new Letra("v", new int[]{1,2,3,6}));
-        alfabetoBraile.add(new Letra("x", new int[]{1,3,4,6}));
-        alfabetoBraile.add(new Letra("y", new int[]{1,3,4,5,6}));
-        alfabetoBraile.add(new Letra("z", new int[]{1,3,5,6}));
-        alfabetoBraile.add(new Letra("ç", new int[]{1,2,4,6}));
-        alfabetoBraile.add(new Letra("á", new int[]{1,6}));
-        alfabetoBraile.add(new Letra("é", new int[]{1,2,6}));
-        alfabetoBraile.add(new Letra("í", new int[]{2,4,6}));
-        alfabetoBraile.add(new Letra("ó", new int[]{1,3,6}));
-        alfabetoBraile.add(new Letra("ú", new int[]{2,3,6}));
-        alfabetoBraile.add(new Letra("â", new int[]{1,2,3,6}));
-        alfabetoBraile.add(new Letra("ê", new int[]{1,3,4,6}));
-        alfabetoBraile.add(new Letra("ô", new int[]{1,2,4,5,6}));
-        alfabetoBraile.add(new Letra("ã", new int[]{1,2,3,4,6}));
-        alfabetoBraile.add(new Letra("õ", new int[]{1,2,3,5,6}));
-        alfabetoBraile.add(new Letra("à", new int[]{1,2,3,4,5,6}));
-        alfabetoBraile.add(new Letra("ü", new int[]{1,2,3,5,6}));
-        alfabetoBraile.add(new Letra("í", new int[]{2,4,6}));
-        alfabetoBraile.add(new Letra("!", new int[]{2,3,4,6}));
-        alfabetoBraile.add(new Letra("?", new int[]{2,3,4,5,6}));
-        alfabetoBraile.add(new Letra(":", new int[]{2,3,5,6}));
-        alfabetoBraile.add(new Letra(";", new int[]{2,3,4,5}));
-        alfabetoBraile.add(new Letra(",", new int[]{2,3}));
-        alfabetoBraile.add(new Letra(".", new int[]{2,3,5}));
-        alfabetoBraile.add(new Letra("-", new int[]{3,6}));
-        alfabetoBraile.add(new Letra("(", new int[]{2,3,4,5,6}));
-        alfabetoBraile.add(new Letra(")", new int[]{2,3,4,5,6}));
-        alfabetoBraile.add(new Letra(" ", new int[]{7}));
+    public void sorteiaLetra(){
+        //Sorteia uma letra do alfabetoBraile  e associa e atribui a this.letra
+        this.letra = alfabetoBraile.getLetra(new Random().nextInt(alfabetoBraile.alfabetoBraile.size()));
+        //Exibe a letra sorteada na tela
+        tvPergunta.setText(this.letra.carater);
+    }
+    public boolean verificaAcerto(){
+
+        //pega a resposta do usuário no campo edResposta e compara se os valores estam contindos em this.letra.pontosCela
+        String resposta = editTextResposta.getText().toString();
+        // realiza split da resposta separando cada caracter em um array de string
+        String[] respostaSplit = resposta.split("");
+        //cria um array de inteiros para armazenar os valores inteiros da resposta
+        int[] respostaInt = new int[respostaSplit.length];
+        //converte os valores do array de string para inteiros
+        if (resposta.length()>1) {
+            for (int i = 0; i < respostaSplit.length; i++) {
+                respostaInt[i] = Integer.parseInt(respostaSplit[i]);
+            }
 
 
+            Letra letra1 = new Letra(letra.getCarater(), respostaInt);
+            //compara se os valores da resposta estão contidos em this.letra.pontosBraille
+            return alfabetoBraile.comparaBraile(letra1);
+        }
+        return false;
+    }
 
+    public void exibeResultado(boolean acertou){
+        if( verificaAcerto()){
+            fazBeepAcerto();
+            sorteiaLetra();
+        }else{
+            fazBeepErro();
+        }
+    }
+
+    public void fazBeepAcerto(){
+        ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+        toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,150);
+    }
+
+    public void fazBeepErro() {
+        ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+        toneGen1.startTone(ToneGenerator.TONE_CDMA_ABBR_ALERT, 550);
+    }
+   //metodo que emite um sirene de erro
+    public void fazSireneErro(){
+
+    }
+
+
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.button:
+                exibeResultado(verificaAcerto());
+
+                break;
+        }
     }
 }
