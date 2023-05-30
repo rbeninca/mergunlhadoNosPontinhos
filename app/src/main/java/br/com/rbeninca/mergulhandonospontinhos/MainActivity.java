@@ -3,8 +3,11 @@ package br.com.rbeninca.mergulhandonospontinhos;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.PlaybackParams;
 import android.media.ToneGenerator;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -60,20 +63,39 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
 
+    //metodo que emite aplausos como som de acerto  tocando 1 segundo o som R.raw.aplausos
+    public void fazBeepAcerto() {
+        // Tocar som de aplausos quando acertar por 1 segundo (1000 milisegundos)
+        MediaPlayer mediaPlayer = MediaPlayer.create(this, R.raw.aplausos);
 
-    public void fazBeepAcerto(){
-        ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
-        toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,150);
+        // Set the playback speed to 2x
+        PlaybackParams params = new PlaybackParams();
+        params.setSpeed(4.0f);
+        mediaPlayer.setPlaybackParams(params);
+
+        mediaPlayer.start();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mediaPlayer.stop();
+                mediaPlayer.release();
+            }
+        }, 1000); // Stop and release the MediaPlayer after 1 second
+        //ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
+        //toneGen1.startTone(ToneGenerator.TONE_CDMA_PIP,150);
     }
 
     public void fazBeepErro() {
         ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
         toneGen1.startTone(ToneGenerator.TONE_CDMA_ABBR_ALERT, 550);
     }
-   //metodo que emite um sirene de erro
+   //metodo que emite um sirene de erro tocando 1 segundo o som R.raw.aplausos
     public void fazSireneErro(){
 
     }
+
 
 
     public void onClick(View v) {
