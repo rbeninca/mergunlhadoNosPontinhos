@@ -40,4 +40,12 @@ public Letra(String carater, int[] pontosCelas, Letra prefixo) {
         this.prefixo = prefixo;
     }
 
+    public String getStringCela(){
+        String strCela = "";
+        for (int i = 0; i < pontosCelas.length; i++) {
+            strCela += pontosCelas[i];
+        }
+        return strCela;
+    }
+
 }

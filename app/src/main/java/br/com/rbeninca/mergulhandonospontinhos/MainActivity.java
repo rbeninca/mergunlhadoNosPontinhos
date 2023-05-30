@@ -6,8 +6,10 @@ import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -15,59 +17,49 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    AlfabetoBraile alfabetoBraile;
+
     EditText editTextResposta;
-    TextView tvPergunta;
+    TextView tvPergunta, tvCelaResposta;
+    MergulhandoNosPontinhosManager manager;
+    ListView listView;
 
     Letra letra;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        editTextResposta=findViewById(R.id.editTextResposta);
-        tvPergunta=findViewById(R.id.textViewPergunta);
+        editTextResposta = findViewById(R.id.editTextResposta);
+        tvPergunta = findViewById(R.id.textViewPergunta);
+        tvCelaResposta = findViewById(R.id.textViewCelaResposta);
         Button button = findViewById(R.id.button);
         button.setOnClickListener(this);
-        alfabetoBraile=new AlfabetoBraile();
-        sorteiaLetra();
+        listView = findViewById(R.id.listView);
+
+
+
+        manager= new MergulhandoNosPontinhosManager();
+        manager.iniciaJogo();
+        carregaProximaLetra();
+
     }
 
-    public void sorteiaLetra(){
-        //Sorteia uma letra do alfabetoBraile  e associa e atribui a this.letra
-        this.letra = alfabetoBraile.getLetra(new Random().nextInt(alfabetoBraile.alfabetoBraile.size()));
-        //Exibe a letra sorteada na tela
-        tvPergunta.setText(this.letra.carater);
-    }
-    public boolean verificaAcerto(){
-
-        //pega a resposta do usuário no campo edResposta e compara se os valores estam contindos em this.letra.pontosCela
-        String resposta = editTextResposta.getText().toString();
-        // realiza split da resposta separando cada caracter em um array de string
-        String[] respostaSplit = resposta.split("");
-        //cria um array de inteiros para armazenar os valores inteiros da resposta
-        int[] respostaInt = new int[respostaSplit.length];
-        //converte os valores do array de string para inteiros
-        if (resposta.length()>1) {
-            for (int i = 0; i < respostaSplit.length; i++) {
-                respostaInt[i] = Integer.parseInt(respostaSplit[i]);
-            }
-
-
-            Letra letra1 = new Letra(letra.getCarater(), respostaInt);
-            //compara se os valores da resposta estão contidos em this.letra.pontosBraille
-            return alfabetoBraile.comparaBraile(letra1);
+    public void showListagem(){
+        ArrayList list=new ArrayList();
+        for (Letra l: manager.letrasSorteadas){
+            list.add(l.getCarater());
         }
-        return false;
+        ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list);
+        listView.setAdapter(adapter);
+
     }
 
-    public void exibeResultado(boolean acertou){
-        if( verificaAcerto()){
-            fazBeepAcerto();
-            sorteiaLetra();
-        }else{
-            fazBeepErro();
-        }
+    public void carregaProximaLetra(){
+        tvPergunta.setText(manager.getLetraAtual().getCarater());
+        tvCelaResposta.setText(manager.letraAtual.getStringCela());
+        showListagem();
     }
+
+
 
     public void fazBeepAcerto(){
         ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
@@ -87,7 +79,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button:
-                exibeResultado(verificaAcerto());
+                if (manager.veriticaRespota(editTextResposta.getText().toString())){
+                    fazBeepAcerto();
+                    manager.proximaLetra();
+                    carregaProximaLetra();
+                    listView.invalidate();
+                }else {
+                    fazBeepErro();
+                }
 
                 break;
         }

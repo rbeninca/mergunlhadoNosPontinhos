@@ -9,9 +9,12 @@ import static org.junit.Assert.*;
  *
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
-public class ExampleUnitTest {
+public class MergulhandoNosPontinhosTest {
     @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+    public void criaAlfabeto()
+    {
+        AlfabetoBraile alfabetoBraile = new AlfabetoBraile();
+        alfabetoBraile.carregaAlfabetoCompletoAZ();
+        assertEquals(26, alfabetoBraile.alfabetoBraile.size());
     }
 }
