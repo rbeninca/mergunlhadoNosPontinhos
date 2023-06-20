@@ -87,7 +87,7 @@ public class AlfabetoBraile {
         alfabetoBraile.add(new Letra("0", new int[]{2, 4, 5},marcadorNumero));
     }
     public  void carregaTudo(){
-        carregaAlfabetoCompletoaz();
+
         carregaNumeros();
 
     }

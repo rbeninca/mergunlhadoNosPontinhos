@@ -24,7 +24,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Integer pontos= 0;
     EditText editTextResposta;
-    TextView tvPergunta, tvCelaResposta;
+    TextView tvPergunta, tvCelaResposta,tvLabelapp;
     MergulhandoNosPontinhosManager manager;
     ListView listView;
     private static final String UTTERANCE_ID = "speech_utterance";
@@ -41,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvPergunta.setOnClickListener(this);
         Button button = findViewById(R.id.button);
         button.setOnClickListener(this);
+        tvLabelapp=findViewById(R.id.textViewlabel);
+        tvLabelapp.setOnClickListener(this);
 
 
 
@@ -126,7 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     fazBeepAcerto();
                     manager.proximaLetra();
                     carregaProximaLetra();
-                    listView.invalidate();
+//                    listView.invalidate();
                     lerTextoDoTextView();
 
                 } else {
@@ -137,6 +139,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.textViewPergunta:
                 lerTextoDoTextView();
                 break;
+            case R.id.textViewlabel:
+                lerTexto(tvLabelapp.getText().toString());
+                break;
+
         }
 
     }
@@ -153,7 +159,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         // Verifique se o TextToSpeech está pronto para uso
         if (textToSpeech != null && !textToSpeech.isSpeaking()) {
-            textToSpeech.speak("Letra "+texto, TextToSpeech.QUEUE_FLUSH, null, UTTERANCE_ID);
+            textToSpeech.speak(texto, TextToSpeech.QUEUE_FLUSH, null, UTTERANCE_ID);
+        }
+    }
+
+    public  void lerTexto(String texto){
+        // Verifique se o TextToSpeech está pronto para uso
+        if (textToSpeech != null && !textToSpeech.isSpeaking()) {
+            textToSpeech.speak(texto, TextToSpeech.QUEUE_FLUSH, null, UTTERANCE_ID);
         }
     }
 

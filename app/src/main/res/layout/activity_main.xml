@@ -18,12 +18,13 @@
         app:layout_constraintTop_toTopOf="@+id/editTextResposta" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/textViewlabel"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:text="Olá! Seja muito bem-vindo ao &quot;Mergulhando nos Pontinhos&quot;! Neste jogo, você terá a oportunidade de testar suas habilidades de reconhecimento da célula Braille, que é um sistema de escrita tátil utilizado por pessoas com deficiência visual. Durante o jogo, seu desafio será digitar corretamente os números correspondentes a cada letra na célula Braille. Quanto mais acertos, mais pontos você acumulará. Então, prepare-se para usar seus dedos e mergulhar nos pontinhos, e vamos ver até onde você pode chegar neste emocionante jogo!"
+        android:textIsSelectable="true"
         app:layout_constraintBottom_toTopOf="@+id/textViewPergunta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +43,7 @@
         app:layout_constraintBottom_toTopOf="@+id/textViewCelaResposta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewlabel" />
 
     <EditText
         android:id="@+id/editTextResposta"
