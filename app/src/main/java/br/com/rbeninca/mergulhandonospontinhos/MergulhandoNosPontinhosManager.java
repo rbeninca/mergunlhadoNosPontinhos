@@ -11,8 +11,10 @@ public class MergulhandoNosPontinhosManager {
 
     public MergulhandoNosPontinhosManager() {
         alfabetoBraile= new AlfabetoBraile();
-        alfabetoBraile.carregaAlfabetoCompletoAZ();
         letrasSorteadas = new ArrayList<Letra>();
+        //alfabetoBraile.carregaAlfabetoCompletoAZ();
+        alfabetoBraile.carregaTudo();
+
 
 
     }
@@ -23,7 +25,8 @@ public class MergulhandoNosPontinhosManager {
     }
 
     public void iniciaJogo() {
-        alfabetoBraile.carregaAlfabetoCompletoAZ();
+        //alfabetoBraile.carregaAlfabetoCompletoAZ();
+        alfabetoBraile.carregaTudo();
         letrasSorteadas.clear();
         sorteiaLetra();
         letrasSorteadas.add(letraAtual);

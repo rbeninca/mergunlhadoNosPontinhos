@@ -22,7 +22,7 @@ import java.util.Locale;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
+    Integer pontos= 0;
     EditText editTextResposta;
     TextView tvPergunta, tvCelaResposta;
     MergulhandoNosPontinhosManager manager;
@@ -41,13 +41,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvPergunta.setOnClickListener(this);
         Button button = findViewById(R.id.button);
         button.setOnClickListener(this);
-        listView = findViewById(R.id.listView);
+
+
 
 
         manager = new MergulhandoNosPontinhosManager();
         manager.iniciaJogo();
         carregaProximaLetra();
         lerTextoDoTextView();
+
 
         textToSpeech = new TextToSpeech(MainActivity.this, new TextToSpeech.OnInitListener() {
             @Override
@@ -66,14 +68,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         for (Letra l : manager.letrasSorteadas) {
             list.add(l.getCarater());
         }
+
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, list);
-        listView.setAdapter(adapter);
+      //  listView.setAdapter(adapter);
 
     }
 
     public void carregaProximaLetra() {
         tvPergunta.setText(manager.getLetraAtual().getCarater());
-        tvCelaResposta.setText(manager.letraAtual.getStringCela());
+        //tvCelaResposta.setText(manager.letraAtual.getStringCela());
         lerTextoDoTextView();
         showListagem();
 
@@ -105,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void fazBeepErro() {
+
         ToneGenerator toneGen1 = new ToneGenerator(AudioManager.STREAM_MUSIC, 100);
         toneGen1.startTone(ToneGenerator.TONE_CDMA_ABBR_ALERT, 550);
     }
@@ -124,6 +128,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     carregaProximaLetra();
                     listView.invalidate();
                     lerTextoDoTextView();
+
                 } else {
                     fazBeepErro();
                 }
