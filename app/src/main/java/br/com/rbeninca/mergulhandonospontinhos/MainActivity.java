@@ -9,6 +9,8 @@ import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Handler;
 import android.speech.tts.*;
+import android.text.InputType;
+import android.text.method.NumberKeyListener;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -36,6 +38,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         editTextResposta = findViewById(R.id.editTextResposta);
+        editTextResposta.setKeyListener(new NumberKeyListener() {
+            @Override
+            protected char[] getAcceptedChars() {
+                return new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+            }
+
+            @Override
+            public int getInputType() {
+                return InputType.TYPE_CLASS_NUMBER;
+            }
+
+        });
         tvPergunta = findViewById(R.id.textViewPergunta);
         tvCelaResposta = findViewById(R.id.textViewCelaResposta);
         tvPergunta.setOnClickListener(this);

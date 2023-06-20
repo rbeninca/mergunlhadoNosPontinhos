@@ -74,9 +74,9 @@ public class AlfabetoBraile {
     }
 
     public void carregaNumeros() {
-        alfabetoBraile.add(new Letra("0", new int[]{3, 4, 5, 6},marcadorNumero));
-        alfabetoBraile.add(new Letra("1", new int[]{1, 2},marcadorNumero));
-        alfabetoBraile.add(new Letra("2", new int[]{1, 2, 5},marcadorNumero));
+        alfabetoBraile.add(new Letra("0", new int[]{2, 4, 5},marcadorNumero));
+        alfabetoBraile.add(new Letra("1", new int[]{1},marcadorNumero));
+        alfabetoBraile.add(new Letra("2", new int[]{1, 2},marcadorNumero));
         alfabetoBraile.add(new Letra("3", new int[]{1, 4},marcadorNumero));
         alfabetoBraile.add(new Letra("4", new int[]{1, 4, 5},marcadorNumero));
         alfabetoBraile.add(new Letra("5", new int[]{1, 5},marcadorNumero));
@@ -84,7 +84,7 @@ public class AlfabetoBraile {
         alfabetoBraile.add(new Letra("7", new int[]{1, 2, 4, 5},marcadorNumero));
         alfabetoBraile.add(new Letra("8", new int[]{1, 2, 5},marcadorNumero));
         alfabetoBraile.add(new Letra("9", new int[]{2, 4},marcadorNumero));
-        alfabetoBraile.add(new Letra("0", new int[]{2, 4, 5},marcadorNumero));
+
     }
     public  void carregaTudo(){
 
