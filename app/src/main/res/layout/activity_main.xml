@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
-        android:text="Olá! Seja muito bem-vindo ao &quot;Mergulhando nos Pontinhos&quot;! Neste jogo, você terá a oportunidade de testar suas habilidades de reconhecimento da célula Braille, que é um sistema de escrita tátil utilizado por pessoas com deficiência visual. Durante o jogo, seu desafio será digitar corretamente os números correspondentes a cada letra na célula Braille. Quanto mais acertos, mais pontos você acumulará. Então, prepare-se para usar seus dedos e mergulhar nos pontinhos, e vamos ver até onde você pode chegar neste emocionante jogo!"
+        android:text="Olá! Seja muito bem-vindo ao &quot;Mergulhando nos Pontinhos&quot;! Neste jogo, você terá a oportunidade de testar suas habilidades de reconhecimento da célula Braille, que é um sistema de escrita tátil utilizado por pessoas com deficiência visual. Durante o jogo, seu desafio será digitar corretamente os números correspondentes a cada letra, numero ou simbolos  na célula Braille. Quanto mais acertos, mais pontos você acumulará. Então, prepare-se para usar seus dedos e mergulhar nos pontinhos, e vamos ver até onde você pode chegar neste emocionante jogo!"
         android:textIsSelectable="true"
         app:layout_constraintBottom_toTopOf="@+id/textViewPergunta"
         app:layout_constraintEnd_toEndOf="parent"
